@@ -22,7 +22,14 @@ const removeSymbols = (symbols = []) => (arr = []) =>
 const orderBy = (attr = '', { sort = 'desc' } = {}) => (arr = []) => {
     const asc = (o1, o2) => o1[attr] - o2[attr]
     const desc = (o1, o2) => o2[attr] - o1[attr]
-    return arr.sort(sort === 'desc' ? desc : asc)
+    /**
+     * correção da aula sobre imutabilidade
+     * a próxima linha programada inicialmente foi:
+     * return arr.sort(sort === 'desc' ? desc : asc)
+     * mas como sort mexe diretamente na constante, ferindo o conceito
+     * de imutabilidade, foi feita a correção:
+     */
+    return [...arr].sort(sort === 'desc' ? desc : asc)
   }
 
 const joinElements = contents =>
