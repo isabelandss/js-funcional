@@ -2,7 +2,7 @@ const path = require('path')
 const fns = require('./functions')
 
 const _path = path.join(__dirname, '..', 'legendas')
-const pathResultFile = path.join(__dirname, 'result.json')
+const pathResultFile = path.join(__dirname, '..', 'projeto_1', 'result.json')
 
 const symbols = ['.', '?', '-', ',', '"', '♪', '_', '<i>', '</i>', '\r', '[', ']', '(', ')']
 
