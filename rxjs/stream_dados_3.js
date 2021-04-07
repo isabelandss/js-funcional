@@ -1,5 +1,6 @@
 const { interval, from } = require('rxjs')
 
+//interval é um operador de criação
 const gerarNumeros = interval(500)
 
 //estou me registrando
