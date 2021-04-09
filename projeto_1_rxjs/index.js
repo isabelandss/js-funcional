@@ -1,4 +1,5 @@
 const path = require('path')
+const { first } = require('rxjs/operators')
 const fns = require('./functions')
 
 const _path = path.join(__dirname, '..', 'legendas')
@@ -28,5 +29,7 @@ fns.getFilesByFolder(_path)
   .pipe(
     fns.getFilesByExtension('.srt'),
     fns.getFileContent(),
+    fns.splitBy('\n'),
+    // first()
   )
   .subscribe(console.log)
