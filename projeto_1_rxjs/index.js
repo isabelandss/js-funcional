@@ -1,5 +1,6 @@
 const path = require('path')
 const fns = require('./functions')
+const { toArray } = require('rxjs/operators')
 
 const _path = path.join(__dirname, '..', 'legendas')
 const pathResultFile = path.join(__dirname, '..', 'projeto_1', 'result.json')
@@ -34,5 +35,8 @@ fns.getFilesByFolder(_path)
     fns.removeSymbols(symbols),
     fns.splitBy(' '),
     fns.removeElementEmpty(),
+    fns.removeOnlyNumbers(),
+    toArray(),
+    fns.groupByWords(),
   )
   .subscribe(a => console.log(a))

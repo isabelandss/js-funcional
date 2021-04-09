@@ -67,15 +67,30 @@ const joinElements = contents =>
   contents.join(' ')
 
 
-const groupByWords = (words) =>
-  Object.values(
-    words.reduce((acc, word = '') => {
-      word = word.toLowerCase()
-      const qdte = acc[word] ? acc[word].qdte + 1 : 1
-      acc[word] = { word, qdte }
-      return acc
-    }, {})
-  )
+// const groupByWords = (words) =>
+//   Object.values(
+//     words.reduce((acc, word = '') => {
+//       word = word.toLowerCase()
+//       const qdte = acc[word] ? acc[word].qdte + 1 : 1
+//       acc[word] = { word, qdte }
+//       return acc
+//     }, {})
+//   )
+const groupByWords = () =>
+  createPipeable(subscriber => ({
+    next(arr) {
+      const group = Object.values(
+        arr.reduce((acc, word = '') => {
+          word = word.toLowerCase()
+          const qdte = acc[word] ? acc[word].qdte + 1 : 1
+          acc[word] = { word, qdte }
+          return acc
+        }, {})
+      )
+      
+      subscriber.next(group)
+    }
+  }))
 
 module.exports = {
   getFilesByExtension,
