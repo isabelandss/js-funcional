@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { Observable } = require('rxjs')
+const { createPipeable } = require('./helpers')
 
 const getFilesByFolder = (p) =>
   new Observable(subscriber => {
@@ -17,15 +18,27 @@ const getFilesByFolder = (p) =>
     }
   })
 
-const getFileContent = (p) =>
-  new Promise((resolve, reject) => {
-    try {
-      const content = fs.readFileSync(p, { encoding: 'utf-8' })
-      resolve(content.toString())
-    } catch (error) {
-      reject(error)
+// const getFileContent = (p) =>
+//   new Promise((resolve, reject) => {
+//     try {
+//       const content = fs.readFileSync(p, { encoding: 'utf-8' })
+//       resolve(content.toString())
+//     } catch (error) {
+//       reject(error)
+//     }
+//   })
+
+const getFileContent = () => 
+  createPipeable(subscriber => ({
+    next(p) {
+      try {
+        const content = fs.readFileSync(p, { encoding: 'utf-8' })
+        subscriber.next(content.toString())
+      } catch (error) {
+        subscriber.error(error)
+      }
     }
-  })
+  }))
 
 const getFileContents = (paths = []) =>
   Promise.all(

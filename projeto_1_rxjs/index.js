@@ -26,6 +26,7 @@ const symbols = ['.', '?', '-', ',', '"', '♪', '_', '<i>', '</i>', '\r', '[', 
 
 fns.getFilesByFolder(_path)
   .pipe(
-    fns.getFilesByExtension('.srt')
+    fns.getFilesByExtension('.srt'),
+    fns.getFileContent(),
   )
   .subscribe(console.log)
