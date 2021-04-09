@@ -1,6 +1,7 @@
 const path = require('path')
+const { toArray, map } = require('rxjs/operators')
+const _ = require('lodash')
 const fns = require('./functions')
-const { toArray } = require('rxjs/operators')
 
 const _path = path.join(__dirname, '..', 'legendas')
 const pathResultFile = path.join(__dirname, '..', 'projeto_1', 'result.json')
@@ -38,5 +39,6 @@ fns.getFilesByFolder(_path)
     fns.removeOnlyNumbers(),
     toArray(),
     fns.groupByWords(),
+    map(arr => _.sortBy(arr, el => -el.qdte))
   )
   .subscribe(a => console.log(a))
