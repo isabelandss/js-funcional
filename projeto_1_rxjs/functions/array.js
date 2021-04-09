@@ -10,8 +10,15 @@ const getFilesByExtension = (ext = '.txt') =>
   }))
 
 
-const removeElementEmpty = (arr = []) =>
-  arr.filter(item => item.trim())
+// const removeElementEmpty = (arr = []) =>
+//   arr.filter(item => item.trim())
+const removeElementEmpty = () => 
+  createPipeable(subscriber => ({
+    next(text) {
+      if(text.trim()) subscriber.next(text)
+    }
+  }))
+
 
 const removeElementIfIncludes = (pattern = '') => (arr = []) =>
   arr.filter(item => !item.includes(pattern))

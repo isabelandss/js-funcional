@@ -30,6 +30,7 @@ fns.getFilesByFolder(_path)
     fns.getFilesByExtension('.srt'),
     fns.getFileContent(),
     fns.splitBy('\n'),
+    fns.removeElementEmpty()
     // first()
   )
-  .subscribe(console.log)
+  .subscribe(a => console.log(a))
