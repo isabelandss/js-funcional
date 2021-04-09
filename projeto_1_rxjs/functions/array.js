@@ -19,21 +19,36 @@ const removeElementEmpty = () =>
     }
   }))
 
-
 const removeElementIfIncludes = (pattern = '') => (arr = []) =>
   arr.filter(item => !item.includes(pattern))
 
-const removeOnlyNumbers = (arr = []) =>
-  arr.filter(item => {
-    const num = parseInt(item.trim())
-    return num !== num // NaN === NaN (false)
-  })
+// const removeOnlyNumbers = (arr = []) =>
+//   arr.filter(item => {
+//     const num = parseInt(item.trim())
+//     return num !== num // NaN === NaN (false)
+//   })
+const removeOnlyNumbers = () =>
+  createPipeable(subscriber => ({
+      next(text) {
+        const num = parseInt(text.trim())
+        if(num !== num) subscriber.next(text)
+      }
+  }))
+  
 
-const removeSymbols = (symbols = []) => (arr = []) =>
-  arr.map(item =>
-    symbols.reduce((acc, symbol) =>
-      acc.split(symbol).join(''), item)
-  )
+// const removeSymbols = (symbols = []) => (arr = []) =>
+//   arr.map(item =>
+//     symbols.reduce((acc, symbol) =>
+//       acc.split(symbol).join(''), item)
+//   )
+const removeSymbols = (symbols = []) =>
+  createPipeable(subscriber => ({
+    next(text) {
+      const textWithoutSymbols =
+        symbols.reduce((acc, symbol) => acc.split(symbol).join(''), text)
+      subscriber.next(textWithoutSymbols)
+    }
+  }))
 
 const orderBy = (attr = '', { sort = 'desc' } = {}) => (arr = []) => {
     const asc = (o1, o2) => o1[attr] - o2[attr]

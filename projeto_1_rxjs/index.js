@@ -1,11 +1,10 @@
 const path = require('path')
-const { first } = require('rxjs/operators')
 const fns = require('./functions')
 
 const _path = path.join(__dirname, '..', 'legendas')
 const pathResultFile = path.join(__dirname, '..', 'projeto_1', 'result.json')
 
-const symbols = ['.', '?', '-', ',', '"', '♪', '_', '<i>', '</i>', '\r', '[', ']', '(', ')']
+const symbols = ['.', '?', '-', ',', '"', '♪', '_', '<i>', '</i>', '\r', '[', ']', '(', ')', '!']
 
 // fns.getFilesByFolder(_path)
 //   .then(fns.getFilesByExtension('.srt'))
@@ -30,7 +29,10 @@ fns.getFilesByFolder(_path)
     fns.getFilesByExtension('.srt'),
     fns.getFileContent(),
     fns.splitBy('\n'),
-    fns.removeElementEmpty()
-    // first()
+    fns.removeElementEmpty(),
+    fns.removeOnlyNumbers(),
+    fns.removeSymbols(symbols),
+    fns.splitBy(' '),
+    fns.removeElementEmpty(),
   )
   .subscribe(a => console.log(a))
