@@ -27,7 +27,6 @@ const getFilesByFolder = (p) =>
 //       reject(error)
 //     }
 //   })
-
 const getFileContent = () => 
   createPipeable(subscriber => ({
     next(p) {
@@ -39,11 +38,6 @@ const getFileContent = () =>
       }
     }
   }))
-
-const getFileContents = (paths = []) =>
-  Promise.all(
-    paths.map(p => getFileContent(p))
-  )
 
 const writeFile = (p) => content =>
   new Promise((resolve, reject) => {
@@ -59,6 +53,5 @@ const writeFile = (p) => content =>
 module.exports = {
   getFilesByFolder,
   getFileContent,
-  getFileContents,
   writeFile,
 }

@@ -1,8 +1,7 @@
-// const splitBy = (pattern = '') => content =>
-//   content.split(pattern)
-
 const { createPipeable } = require("./helpers")
 
+// const splitBy = (pattern = '') => content =>
+//   content.split(pattern)
 const splitBy = (pattern = '') =>
   createPipeable(subscriber => ({
     next(text) {

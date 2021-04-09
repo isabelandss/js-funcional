@@ -19,9 +19,6 @@ const removeElementEmpty = () =>
     }
   }))
 
-const removeElementIfIncludes = (pattern = '') => (arr = []) =>
-  arr.filter(item => !item.includes(pattern))
-
 // const removeOnlyNumbers = (arr = []) =>
 //   arr.filter(item => {
 //     const num = parseInt(item.trim())
@@ -34,7 +31,6 @@ const removeOnlyNumbers = () =>
         if(num !== num) subscriber.next(text)
       }
   }))
-  
 
 // const removeSymbols = (symbols = []) => (arr = []) =>
 //   arr.map(item =>
@@ -49,23 +45,6 @@ const removeSymbols = (symbols = []) =>
       subscriber.next(textWithoutSymbols)
     }
   }))
-
-const orderBy = (attr = '', { sort = 'desc' } = {}) => (arr = []) => {
-    const asc = (o1, o2) => o1[attr] - o2[attr]
-    const desc = (o1, o2) => o2[attr] - o1[attr]
-    /**
-     * correção da aula sobre imutabilidade
-     * a próxima linha programada inicialmente foi:
-     * return arr.sort(sort === 'desc' ? desc : asc)
-     * mas como sort mexe diretamente na constante, ferindo o conceito
-     * de imutabilidade, foi feita a correção:
-     */
-    return [...arr].sort(sort === 'desc' ? desc : asc)
-  }
-
-const joinElements = contents =>
-  contents.join(' ')
-
 
 // const groupByWords = (words) =>
 //   Object.values(
@@ -95,10 +74,7 @@ const groupByWords = () =>
 module.exports = {
   getFilesByExtension,
   removeElementEmpty,
-  removeElementIfIncludes,
   removeOnlyNumbers,
   removeSymbols,
-  orderBy,
-  joinElements,
   groupByWords,
 }
