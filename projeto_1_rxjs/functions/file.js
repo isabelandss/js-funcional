@@ -1,14 +1,19 @@
 const fs = require('fs')
 const path = require('path')
+const { Observable } = require('rxjs')
 
 const getFilesByFolder = (p) =>
-  new Promise((resolve, reject) => {
+  new Observable(subscriber => {
     try {
       const files = fs.readdirSync(p)
-      const paths = files.map(file => path.join(p, file))
-      resolve(paths)
+      files.forEach(file => {
+        const filePath = path.join(p, file)
+        subscriber.next(filePath)
+      })
+
+      subscriber.complete()
     } catch (error) {
-      reject(error)
+      subscriber.error(error)
     }
   })
 

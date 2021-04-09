@@ -1,5 +1,14 @@
-const getFilesByExtension = (ext = '.srt') => (arr = []) =>
-  arr.filter(item => item.endsWith(ext))
+const { createPipeable } = require("./helpers")
+
+// const getFilesByExtension = (ext = '.srt') => (arr = []) =>
+//   arr.filter(item => item.endsWith(ext))
+const getFilesByExtension = (ext = '.txt') => 
+  createPipeable(subscriber => ({
+    next(text) {
+      if(text.endsWith(ext)) subscriber.next(text)
+    }
+  }))
+
 
 const removeElementEmpty = (arr = []) =>
   arr.filter(item => item.trim())
