@@ -39,16 +39,28 @@ const getFileContent = () =>
     }
   }))
 
-const writeFile = (p) => content =>
-  new Promise((resolve, reject) => {
-    try {
-      fs.writeFileSync(p, JSON.stringify(content, null, 2), (_, data) => {
-        resolve(data)
-      }) 
-    } catch (error) {
-      reject(error)
+// const writeFile = (p) => content =>
+//   new Promise((resolve, reject) => {
+//     try {
+//       fs.writeFileSync(p, JSON.stringify(content, null, 2), (_, data) => {
+//         resolve(data)
+//       })
+//     } catch (error) {
+//       reject(error)
+//     }
+//   })
+const writeFile = p =>
+  createPipeable(subscriber => ({
+    next(content) {
+      try {
+        fs.writeFileSync(p, JSON.stringify(content, null, 2), (_, data) => {
+          subscriber.next(data)
+        })
+      } catch (error) {
+        subscriber.error(error)
+      }
     }
-  })
+  }))
 
 module.exports = {
   getFilesByFolder,

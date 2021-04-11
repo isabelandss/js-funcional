@@ -4,7 +4,7 @@ const _ = require('lodash')
 const fns = require('./functions')
 
 const _path = path.join(__dirname, '..', 'legendas')
-const pathResultFile = path.join(__dirname, '..', 'projeto_1', 'result.json')
+const pathResultFile = path.join(__dirname, '..', 'projeto_1_rxjs', 'result.json')
 
 const symbols = ['.', '?', '-', ',', '"', '♪', '_', '<i>', '</i>', '\r', '[', ']', '(', ')', '!']
 
@@ -39,6 +39,7 @@ fns.getFilesByFolder(_path)
     fns.removeOnlyNumbers(),
     toArray(),
     fns.groupByWords(),
-    map(arr => _.sortBy(arr, el => -el.qdte))
+    map(arr => _.sortBy(arr, el => -el.qdte)),
+    fns.writeFile(pathResultFile),
   )
   .subscribe(a => console.log(a))
